@@ -33,7 +33,7 @@ func main() {
 	}
 	start := time.Now()
 	displayRuntime(port)
-	handler, ok := startup(http.NewServeMux())
+	handler, ok := startup(http.NewServeMux(), os.Args)
 	if !ok {
 		os.Exit(1)
 	}
@@ -79,7 +79,7 @@ func displayRuntime(port string) {
 	fmt.Printf("env     : %v\n", core.EnvStr())
 }
 
-func startup(r *http.ServeMux) (http.Handler, bool) {
+func startup(r *http.ServeMux, cmdLine []string) (http.Handler, bool) {
 	// Initialize logging
 	initialize.Logging()
 
@@ -89,14 +89,14 @@ func startup(r *http.ServeMux) (http.Handler, bool) {
 	}
 
 	// Initialize host and ingress proxies
-	err := initialize.Host()
+	err := initialize.Host(cmdLine)
 	if err != nil {
 		log.Printf(err.Error())
 		return r, false
 	}
 
 	// Initialize egress proxies
-	err = initialize.EgressProxies()
+	err = initialize.EgressProxies(cmdLine)
 	if err != nil {
 		log.Printf(err.Error())
 		return r, false

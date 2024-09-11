@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func Host() error {
+func Host(cmdLine []string) error {
 	// Initialize host proxy for all HTTP handlers,and add intermediaries
 	host.SetHostTimeout(time.Second * 3)
 	host.SetAuthExchange(AuthHandler, nil)
