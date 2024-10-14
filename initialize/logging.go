@@ -5,7 +5,6 @@ import (
 	"github.com/advanced-go/stdlib/access"
 	"github.com/advanced-go/stdlib/core"
 	fmt2 "github.com/advanced-go/stdlib/fmt"
-	"github.com/advanced-go/stdlib/httpx"
 	"github.com/advanced-go/stdlib/uri"
 	"strconv"
 	"time"
@@ -68,7 +67,7 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 		fmt2.FmtRFC3339Millis(start),
 		strconv.Itoa(access.Milliseconds(duration)),
 
-		fmt2.JsonString(newReq.Header.Get(httpx.XRequestId)),
+		fmt2.JsonString(newReq.Header.Get(core.XRequestId)),
 		fmt2.JsonString(routing.From),
 		fmt2.JsonString(access.CreateTo(newReq)),
 		//access.FmtJsonString(req.Header.Get(runtime2.XRelatesTo)),

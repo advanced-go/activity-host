@@ -1,6 +1,9 @@
 package initialize
 
 import (
+	http2 "github.com/advanced-go/activity/http"
+	"github.com/advanced-go/activity/module"
+	"github.com/advanced-go/stdlib/access"
 	"github.com/advanced-go/stdlib/core"
 	"github.com/advanced-go/stdlib/host"
 	"net/http"
@@ -12,8 +15,8 @@ func Host(cmdLine []string) error {
 	host.SetHostTimeout(time.Second * 3)
 	host.SetAuthExchange(AuthHandler, nil)
 	//registerExchanges()
-	//err := host.RegisterExchange(module.Authority, host.NewAccessLogIntermediary(http2.Exchange))
-	return nil
+	err := host.RegisterExchange(module.Authority, host.NewAccessLogIntermediary(access.InternalTraffic, http2.Exchange))
+	return err
 }
 
 /*
