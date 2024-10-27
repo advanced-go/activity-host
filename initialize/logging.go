@@ -2,10 +2,10 @@ package initialize
 
 import (
 	"fmt"
-	"github.com/advanced-go/stdlib/access"
-	"github.com/advanced-go/stdlib/core"
-	fmt2 "github.com/advanced-go/stdlib/fmt"
-	"github.com/advanced-go/stdlib/uri"
+	"github.com/advanced-go/common/access"
+	"github.com/advanced-go/common/core"
+	//fmt2 "github.com/advanced-go/stdlib/fmt"
+	"github.com/advanced-go/common/uri"
 	"strconv"
 	"time"
 )
@@ -64,36 +64,36 @@ func logger(o core.Origin, traffic string, start time.Time, duration time.Durati
 		//access.FmtJsonString(o.InstanceId),
 
 		traffic,
-		fmt2.FmtRFC3339Millis(start),
+		core.FmtRFC3339Millis(start),
 		strconv.Itoa(access.Milliseconds(duration)),
 
-		fmt2.JsonString(newReq.Header.Get(core.XRequestId)),
-		fmt2.JsonString(routing.From),
-		fmt2.JsonString(access.CreateTo(newReq)),
-		//access.FmtJsonString(req.Header.Get(runtime2.XRelatesTo)),
-		//access.FmtJsonString(req.Proto),
-		fmt2.JsonString(newReq.Method),
-		fmt2.JsonString(url),
-		fmt2.JsonString(newReq.URL.RawQuery),
-		//fmt2.JsonString(host),
-		//fmt2.JsonString(path),
+		access.JsonString(newReq.Header.Get(core.XRequestId)),
+		access.JsonString(routing.From),
+		access.JsonString(access.CreateTo(newReq)),
+		//access.JsonString(req.Header.Get(runtime2.XRelatesTo)),
+		//access.JsonString(req.Proto),
+		access.JsonString(newReq.Method),
+		access.JsonString(url),
+		access.JsonString(newReq.URL.RawQuery),
+		//access.JsonString(host),
+		//access.JsonString(path),
 
 		newResp.StatusCode,
-		//fmt2.JsonString(resp.Status),
+		//access.JsonString(resp.Status),
 		fmt.Sprintf("%v", newResp.ContentLength),
-		fmt2.JsonString(access.Encoding(newResp)),
+		access.JsonString(access.Encoding(newResp)),
 
 		// Controller
 		access.Milliseconds(controller.Timeout),
 		fmt.Sprintf("%v", controller.RateLimit),
 		strconv.Itoa(controller.RateBurst),
-		fmt2.JsonString(controller.Code),
+		access.JsonString(controller.Code),
 
 		// Routing
-		fmt2.JsonString(routing.Route),
-		fmt2.JsonString(routing.To),
+		access.JsonString(routing.Route),
+		access.JsonString(routing.To),
 		fmt.Sprintf("%v", routing.Percent),
-		fmt2.JsonString(routing.Code),
+		access.JsonString(routing.Code),
 	)
 	fmt.Printf("%v\n", s)
 	//return s

@@ -3,9 +3,9 @@ package initialize
 import (
 	http2 "github.com/advanced-go/activity/http"
 	"github.com/advanced-go/activity/module"
-	"github.com/advanced-go/stdlib/access"
-	"github.com/advanced-go/stdlib/core"
-	"github.com/advanced-go/stdlib/host"
+	"github.com/advanced-go/common/access"
+	"github.com/advanced-go/common/core"
+	"github.com/advanced-go/common/host"
 	"net/http"
 	"time"
 )
@@ -14,25 +14,9 @@ func Host(cmdLine []string) error {
 	// Initialize host proxy for all HTTP handlers,and add intermediaries
 	host.SetHostTimeout(time.Second * 3)
 	host.SetAuthExchange(AuthHandler, nil)
-	//registerExchanges()
 	err := host.RegisterExchange(module.Authority, host.NewAccessLogIntermediary(access.InternalTraffic, http2.Exchange))
 	return err
 }
-
-/*
-func registerExchanges() error {
-	err := host.RegisterExchange(module.Authority, host.NewAccessLogIntermediary(http2.Exchange))
-	if err != nil {
-		return err
-	}
-	err = host.RegisterExchange(module.Authority, host.NewAccessLogIntermediary(-search", http2.Exchange))
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-*/
 
 func AuthHandler(r *http.Request) (*http.Response, *core.Status) {
 	/*
@@ -49,5 +33,4 @@ func AuthHandler(r *http.Request) (*http.Response, *core.Status) {
 
 	*/
 	return &http.Response{StatusCode: http.StatusOK}, core.StatusOK()
-
 }
